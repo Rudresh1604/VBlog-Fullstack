@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <!-- Fontawesome -->
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css"
+    />
+    <!-- CSS -->
+    <link rel="stylesheet" href="/css/uploadPhoto.css" />
+    <title>Upload Profile Photo</title>
+  </head>
+  <body>
+    <!-- nav start -->
+    <%- include('../partials/navbar.ejs') %>
+    <!-- nav end -->
+    <div class="form-container">
+      <!-- icon -->
+      <h1>Upload Profile photo</h1>
+      <p>
+        <!-- upload icon -->
+      </p>
+      <% if(err){ %>
+        <small class="error">
+          <i class="fas fa-exclamation-circle"></i>
+          <%-err%>
+        </small>
+        <% } %>
+      </small>
+      <form
+        action="/api/v1/users/profile-photo-upload?_method=PUT"
+        method="post"
+        enctype="multipart/form-data"
+      >
+        <label for="email">Select Imgae</label>
+        <input type="file" name="profile" id="image" />
+        <button type="submit">
+          <i class="fas fa-upload"></i>
+        </button>
+      </form>
+    </div>
+    <!-- footer -->
+    <%- include('../partials/footer.ejs') %>
+  </body>
+</html>

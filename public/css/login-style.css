@@ -1,0 +1,40 @@
+body {
+  background-color: #cbc3e3;
+}
+
+.container {
+  margin-top: 10%;
+  width: 60%;
+  height: 50%;
+  background-color: #fff;
+  border-radius: 25px;
+}
+.container h1 {
+  font-size: 52px;
+  background: -webkit-linear-gradient(#9b9494, #921010);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
+.form-content {
+  font-size: 1.5rem;
+  color: black;
+}
+
+.form-content:hover,
+.container:hover {
+  cursor: pointer;
+}
+
+.form-content label {
+  --c: no-repeat linear-gradient(#1095c1 0 0);
+  background: var(--c) calc(-100% + var(--i, 0) * 100%) 100% / 50%
+      calc(100% * var(--i, 0) + 0.08em),
+    var(--c) calc(200% - var(--i, 0) * 100%) 0 / 50%
+      calc(100% * var(--i, 0) + 0.08em);
+  transition: 0.3s calc(var(--i, 0) * 0.3s);
+  /* background-position 0.3s calc(0.3s - var(--i, 0) * 0.3s); */
+}
+.form-content label:hover {
+  --i: 1;
+}

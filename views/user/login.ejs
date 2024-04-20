@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Login Page</title>
+
+    <link
+      href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css"
+      rel="stylesheet"
+      integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH"
+      crossorigin="anonymous"
+    />
+  </head>
+  <body>
+    <!-- nav start -->
+    <%- include('../partials/navbar.ejs') %>
+    <!-- nav end -->
+    <link rel="stylesheet" href="/css/login-style.css" />
+    <!--  -->
+    <div class="container d-flex justify-content-center align-items-center">
+      <div class="container mt-5">
+        <div class="text">
+          <h1 class="mb-5">Login To VBlog</h1>
+          <%if(err){ %>
+          <div class="display-error text-center fs-4 text-danger">
+            <i class="fa-solid fa-circle-exclamation"></i>
+            <p><%=err%></p>
+          </div>
+          <%}%>
+        </div>
+
+        <form class="form-content" action="/api/v1/users/login" method="post">
+          <div class="mb-3">
+            <label for="exampleInputEmail1" class="form-label"
+              >Email address</label
+            >
+            <input
+              type="email"
+              class="form-control mb-3 p-2"
+              id="exampleInputEmail1"
+              aria-describedby="emailHelp"
+              name="email"
+            />
+            <div id="emailHelp" class="form-text text-success mb-3">
+              We'll never share your email with anyone else.
+            </div>
+          </div>
+          <div class="mb-3">
+            <label for="exampleInputPassword1" class="form-label"
+              >Password</label
+            >
+            <input
+              type="password"
+              class="form-control p-2"
+              id="exampleInputPassword1"
+              name="password"
+            />
+          </div>
+
+          <button type="submit" class="btn btn-primary w-100 mb-5">
+            Submit
+          </button>
+        </form>
+      </div>
+    </div>
+    <!-- footer -->
+    <%- include('../partials/footer.ejs') %>
+    <script
+      src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"
+      integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz"
+      crossorigin="anonymous"
+    ></script>
+  </body>
+</html>

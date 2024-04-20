@@ -1,0 +1,172 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Profile Page</title>
+    <link
+      rel="stylesheet"
+      href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css"
+    />
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css"
+    />
+  </head>
+  <body>
+    <%- include('../partials/navbar.ejs') %>
+    <div class="profile-cont">
+      <link rel="stylesheet" href="/css/profile.css" />
+      <div class="cover-photo">
+        <% if(user.coverImage){%>
+        <img src="<%=user?.coverImage%>" alt="..." />
+        <% }else{ %>
+        <img
+          src="https://images.pexels.com/photos/268941/pexels-photo-268941.jpeg?cs=srgb&dl=pexels-pixabay-268941.jpg&fm=jpg"
+          alt="..."
+        />
+        <% } %> <% if(user?._id.toString() === userAuth.toString()){ %>
+        <a href="/api/v1/users/upload-cover-photo-form">
+          <i class="fa-solid fa-images"></i>
+        </a>
+        <% } %>
+      </div>
+      <div class="profile-img">
+        <% if(user.profileImage){%>
+        <img src="<%=user?.profileImage%>" alt="Loading..." />
+        <% }else{ %>
+        <img
+          src="https://www.shutterstock.com/image-vector/blank-avatar-photo-place-holder-260nw-1114445501.jpg"
+          alt=""
+        />
+        <% } %> <% if(user?._id.toString() === userAuth.toString()){ %>
+        <a target="_blank" href="/api/v1/users/upload-profile-photo-form"
+          ><i class="fa-solid fa-image"></i
+        ></a>
+        <% } %> <% if(user?._id.toString() === userAuth.toString()){ %>
+        <div
+          class="icon-container d-flex gap-5 mt-4 justify-content-center align-items-center"
+        >
+          <!-- edit icon  -->
+          <div class="btn">
+            <a href="/api/v1/users/update-user/<%=user?._id%>"
+              ><i class="fas fa-user-edit"></i
+            ></a>
+          </div>
+          <!-- create post icon -->
+          <div class="btn">
+            <a href="/api/v1/posts/create-post"
+              ><i class="fas fa-envelope"></i
+            ></a>
+          </div>
+          <!-- update password -->
+          <div class="btn">
+            <a href="/api/v1/users/update-user-password"
+              ><i class="fas fa-key"></i
+            ></a>
+          </div>
+          <!-- logout button -->
+          <div class="btn">
+            <a href="/api/v1/users/logout"
+              ><i class="fas fa-sign-out-alt"></i
+            ></a>
+          </div>
+        </div>
+        <% } %>
+      </div>
+      <!-- personal details -->
+      <div class="personal-container">
+        <div class="details-wrapper">
+          <div class="details">
+            <i class="fas fa-user"></i>
+            <p>Name: <%= user?.fullname %></p>
+          </div>
+          <div class="details">
+            <i class="fas fa-envelope"></i>
+            <p>Email: <%= user?.email %></p>
+          </div>
+          <!-- date joined -->
+          <div class="details">
+            <i class="fas fa-calendar"></i>
+            <p>Date Joined: <%=user?.createdAt.toLocaleDateString() %></p>
+          </div>
+        </div>
+      </div>
+      <hr />
+      <div class="latest-post-title">
+        <!-- Icon -->
+        <i class="fas fa-book-open"></i>
+        <h1>Latest Posts (20)</h1>
+      </div>
+      <hr />
+      <!-- content -->
+      <section class="d-flex justify-content-center align-items-center">
+        <!-- <div class="card d-flex flex-column m-4 h-50" style="width: 18rem">
+          <p class="post-info m-3">
+            <span class="post-author m-2">
+              <i class="fas fa-user"></i>
+              <a href="#">John Doe</a>
+            </span>
+            <span class="post-date m-2">
+              <i class="far fa-calendar-alt"></i>
+              <time datetime="2020-01-01">January 1, 2020</time>
+            </span>
+          </p>
+          <img src="/images/post1.jpg" class="img-fluid" alt="..." />
+          <div class="card-body">
+            <h3 class="card-title">Become a Web Developer</h3>
+            <p class="card-text">
+              Lorem ipsum dolor, sit amet consectetur adipisicing elit. Officia
+              itaque inventore culpa placeat! Cum nam optio, labore, voluptas
+              sunt quam rem cupiditate laboriosam amet reiciendis velit
+              doloribus eum! Repudiandae, odio?
+            </p>
+            category
+            <div class="post-category mb-3 fw-bold">
+              <span>Category:</span>
+            </div>
+            <a href="#" class="btn btn-primary post-read-more"
+              >Continue Reading</a
+            >
+          </div>
+        </div> -->
+        <% if(user?.post?.length <= 0){ %>
+        <h1>You Not Posted Anything Yet</h1>
+        <% }else{ %>
+        <!-- all post are here -->
+        <% user?.post?.forEach(p => {%>
+        <div class="card d-flex flex-column m-4 h-50" style="width: 18rem">
+          <p class="post-info m-3">
+            <span class="post-author m-2">
+              <i class="fas fa-user"></i>
+              <a href="#"><%=user?.fullname%></a>
+            </span>
+            <span class="post-date m-2">
+              <i class="far fa-calendar-alt"></i>
+              <time datetime="2020-01-01"
+                ><%=p?.createdAt.toLocaleDateString()%></time
+              >
+            </span>
+          </p>
+          <img src="<%=p?.image%>" class="img-fluid" alt="..." />
+          <div class="card-body">
+            <h3 class="card-title"><%=p?.title%></h3>
+            <p class="card-text"><%=truncatePost(p?.description)%></p>
+            <!-- category -->
+            <div class="post-category mb-3 fw-bold">
+              <span>Category:<%=p?.category%></span>
+            </div>
+            <a
+              href="/api/v1/posts/<%=p?._id%>"
+              class="btn btn-primary post-read-more"
+              >Continue Reading</a
+            >
+          </div>
+        </div>
+        <% });%> <% } %>
+      </section>
+    </div>
+    <%- include('../partials/footer.ejs') %>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+  </body>
+</html>
